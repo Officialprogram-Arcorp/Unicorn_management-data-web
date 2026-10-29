@@ -4,7 +4,7 @@
 
 | Berkas | Fungsi |
 |---|---|
-| `public/home.html` | Website perusahaan + formulir pendaftaran (sudah tersemat di bagian **Karier**) |
+| `public/index.html` | Website perusahaan + formulir pendaftaran (sudah tersemat di bagian **Karier**) |
 | `public/apply.js` | Logika formulir: unggah dokumen → simpan pendaftaran → notifikasi |
 | `public/admin.html` | Dashboard admin (login, statistik, cari/filter, ubah status, dokumen, ekspor CSV, hapus) |
 | `public/config.js` | URL & kunci publik Supabase, nomor WhatsApp admin, email notifikasi |
@@ -16,7 +16,7 @@
 ## Arsitektur
 
 ```
-Pengunjung ──► home.html ──► Supabase Storage (bucket PRIVAT "applicant-docs")   ← hanya bisa menambah berkas
+Pengunjung ──► index.html ──► Supabase Storage (bucket PRIVAT "applicant-docs")   ← hanya bisa menambah berkas
                         └──► fungsi submit_application() ──► tabel applications  ← validasi di server
 Admin ───────► admin.html ──► login Supabase Auth ──► baca/ubah data (RLS: hanya email di tabel admins)
 ```
