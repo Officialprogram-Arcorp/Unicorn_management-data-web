@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Dashboard Admin — UNICORN MANAGEMENT</title>
+<script src="./config.js"></script>
+<style>
+:root{--rose:#d88978;--deep:#7b352e;--wine:#2b0f12;--pearl:#fffaf5;--pale:#f9e1d8;--gold:#d99a42;--gold2:#f0c987;--ink:#49312d;--muted:#80645f;--line:#ebcdbf;--ok:#2e6b3a;--bad:#b3261e}
+*{box-sizing:border-box}
+body{margin:0;background:linear-gradient(145deg,#fffaf5,#f7e8df);font:15px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);min-height:100vh}
+main{max-width:1240px;margin:auto;padding:0 14px 50px}
+.top{background:linear-gradient(160deg,var(--wine),#1a0709);color:#f5e3d8;border-bottom:2px solid var(--gold)}
+.top .in{max-width:1240px;margin:auto;padding:12px 14px;display:flex;align-items:center;gap:12px}
+.top img{width:46px;height:46px;object-fit:contain}
+.top b{font:700 1rem Georgia,serif;letter-spacing:.14em;color:var(--gold2)}
+.top span{display:block;font-size:.78rem;color:#cfb3a6}
+.top .sp{margin-left:auto}
+.panel{background:#fffaf5;border:1px solid var(--line);border-radius:18px;padding:20px;margin-top:16px;box-shadow:0 10px 30px #7b352e0b}
+h1,h2,h3{color:var(--deep);font-family:Georgia,serif;margin:0 0 6px}
+h2{font-size:1.2rem}
+.muted{color:var(--muted)}.small{font-size:.82rem}
+label{display:block;font-weight:650;margin:10px 0 5px;font-size:.88rem}
+input,select,textarea{width:100%;padding:10px 11px;border:1px solid #e4d0cf;border-radius:10px;font:inherit;background:#fff;color:var(--ink)}
+textarea{min-height:80px;resize:vertical}
+button{border:0;border-radius:10px;padding:10px 15px;font:700 .9rem inherit;cursor:pointer}
+button:disabled{opacity:.6;cursor:wait}
+.primary{background:linear-gradient(135deg,var(--rose),var(--deep));color:#fff}
+.secondary{background:#fff;border:1px solid var(--line);color:var(--deep)}
+.danger{background:#fff;border:1px solid #e4a8a3;color:var(--bad)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end}.row>*{flex:1;min-width:140px}.row>.fit{flex:0 0 auto;min-width:0}
+.status{white-space:pre-wrap;margin-top:10px;font-size:.88rem;color:var(--deep)}.status.err{color:var(--bad)}
+.hidden{display:none!important}
+.login{max-width:420px;margin:48px auto}
+.stats{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px;margin-top:16px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 16px;cursor:pointer;transition:border-color .2s,transform .2s}
+.stat:hover,.stat.on{border-color:var(--rose);transform:translateY(-2px)}
+.stat b{display:block;font:600 1.8rem Georgia,serif;color:var(--deep)}
+.stat span{font-size:.76rem;letter-spacing:.08em;color:var(--muted);text-transform:uppercase}
+.tablewrap{overflow:auto;margin-top:12px}
+table{width:100%;border-collapse:collapse;min-width:760px}
+th,td{text-align:left;padding:11px;border-bottom:1px solid #efdfdc;vertical-align:top}
+th{background:#f9e7e1;color:var(--deep);font-size:.82rem;letter-spacing:.04em;position:sticky;top:0}
+tr.clickable{cursor:pointer}tr.clickable:hover td{background:#fff4ef}
+.tag{display:inline-block;padding:3px 10px;border-radius:99px;font-size:.76rem;font-weight:700;background:var(--pale);color:var(--deep)}
+.tag.Seleksi{background:#fdecc8;color:#7a5200}.tag.Wawancara{background:#dbe8fb;color:#1f4a8a}.tag.Diterima{background:#d7efd9;color:var(--ok)}.tag.Ditolak{background:#f7d9d6;color:var(--bad)}
+dialog{border:1px solid var(--line);border-radius:20px;padding:0;max-width:720px;width:calc(100% - 24px);background:var(--pearl);color:var(--ink)}
+dialog::backdrop{background:#2b0f12aa}
+.dhead{display:flex;align-items:center;gap:10px;padding:16px 20px;border-bottom:1px solid var(--line)}
+.dhead h3{margin:0}.dhead .sp{margin-left:auto}
+.dbody{padding:18px 20px;max-height:70vh;overflow:auto}
+.kv{display:grid;grid-template-columns:150px 1fr;gap:6px 14px;font-size:.92rem}
+.kv dt{color:var(--muted)}.kv dd{margin:0;overflow-wrap:anywhere;white-space:pre-wrap}
+.docs{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 4px}
+.dfoot{display:flex;gap:10px;flex-wrap:wrap;padding:14px 20px;border-top:1px solid var(--line)}
+@media(max-width:900px){.stats{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:560px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}.kv{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="top"><div class="in"><img src="assets/logo.webp" alt=""><div><b>UNICORN MANAGEMENT</b><span>Dashboard Admin · Rekrutmen</span></div><div class="sp"><button class="secondary hidden" id="logoutBtn">Keluar</button></div></div></div>
+<main>
+
+<section class="panel login" id="loginPanel">
+  <h2>Login Admin</h2>
+  <p class="muted small">Masuk dengan akun admin. Data pelamar hanya dapat dibaca oleh admin yang terdaftar.</p>
+  <form id="loginForm">
+    <label for="email">Email</label><input id="email" type="email" autocomplete="username" required>
+    <label for="password">Password</label><input id="password" type="password" autocomplete="current-password" required>
+    <button class="primary" style="margin-top:14px;width:100%" type="submit" id="loginBtn">Masuk</button>
+  </form>
+  <div class="status" id="loginStatus" role="status"></div>
+</section>
+
+<section class="hidden" id="dashboardPanel">
+  <div class="stats" id="stats"></div>
+  <div class="panel">
+    <div class="row">
+      <div><label for="search">Cari nama / posisi / nomor</label><input id="search" placeholder="Cari…"></div>
+      <div><label for="filterStatus">Status</label><select id="filterStatus"><option value="">Semua status</option><option>Baru</option><option>Seleksi</option><option>Wawancara</option><option>Diterima</option><option>Ditolak</option></select></div>
+      <div class="fit"><button class="secondary" id="refreshBtn">Muat ulang</button></div>
+      <div class="fit"><button class="secondary" id="csvBtn">Ekspor CSV</button></div>
+    </div>
+    <div class="status" id="dashStatus" role="status"></div>
+    <div class="tablewrap"><table>
+      <thead><tr><th>Nomor</th><th>Pelamar</th><th>Posisi</th><th>WhatsApp</th><th>Masuk</th><th>Status</th></tr></thead>
+      <tbody id="rows"><tr><td colspan="6">Belum memuat data.</td></tr></tbody>
+    </table></div>
+  </div>
+</section>
+</main>
+
+<dialog id="detail">
+  <div class="dhead"><h3 id="dTitle"></h3><span class="tag" id="dTag"></span><div class="sp"><button class="secondary" id="dClose" aria-label="Tutup">Tutup</button></div></div>
+  <div class="dbody">
+    <dl class="kv" id="dKv"></dl>
+    <h3 style="margin-top:18px;font-size:1rem">Dokumen</h3>
+    <p class="muted small" style="margin:0">Tautan dokumen bersifat sementara (2 menit) dan hanya untuk admin.</p>
+    <div class="docs" id="dDocs"></div>
+    <label for="dStatus">Ubah status</label>
+    <select id="dStatus"><option>Baru</option><option>Seleksi</option><option>Wawancara</option><option>Diterima</option><option>Ditolak</option></select>
+    <label for="dNote">Catatan internal</label>
+    <textarea id="dNote" maxlength="1000"></textarea>
+    <div class="status" id="dStatusMsg" role="status"></div>
+  </div>
+  <div class="dfoot">
+    <button class="primary" id="dSave">Simpan</button>
+    <a class="secondary" id="dWa" target="_blank" rel="noopener" style="text-decoration:none;padding:10px 15px;border:1px solid var(--line);border-radius:10px;font-weight:700;color:var(--deep)">Chat WhatsApp</a>
+    <button class="danger" id="dDelete" style="margin-left:auto">Hapus data</button>
+  </div>
+</dialog>
+
+<script>
+const cfg = window.UNICORN_CONFIG || {};
+const U = cfg.SUPABASE_URL, K = cfg.SUPABASE_KEY, BUCKET = cfg.BUCKET || "applicant-docs";
+const STATUSES = ["Baru","Seleksi","Wawancara","Diterima","Ditolak"];
+const $ = id => document.getElementById(id);
+let session = null, rows = [], current = null;
+
+/* ---------- sesi ---------- */
+try { session = JSON.parse(sessionStorage.getItem("um_session") || "null"); } catch { session = null; }
+const saveSession = s => { session = s; s ? sessionStorage.setItem("um_session", JSON.stringify(s)) : sessionStorage.removeItem("um_session"); };
+function toSession(d) { return { access_token: d.access_token, refresh_token: d.refresh_token, expires_at: d.expires_at || Math.floor(Date.now()/1000) + (d.expires_in || 3600) }; }
+
+async function ensureFresh() {
+  if (!session) throw new Error("Belum login");
+  if (session.expires_at * 1000 - Date.now() > 60000) return;
+  const r = await fetch(`${U}/auth/v1/token?grant_type=refresh_token`, { method: "POST", headers: { apikey: K, "Content-Type": "application/json" }, body: JSON.stringify({ refresh_token: session.refresh_token }) });
+  if (!r.ok) { logout("Sesi berakhir, silakan login lagi."); throw new Error("Sesi berakhir"); }
+  saveSession(toSession(await r.json()));
+}
+async function api(path, opts = {}) {
+  await ensureFresh();
+  const r = await fetch(U + path, { ...opts, headers: { apikey: K, Authorization: "Bearer " + session.access_token, ...(opts.headers || {}) } });
+  if (r.status === 401) { logout("Sesi tidak valid, silakan login lagi."); throw new Error("Tidak berwenang"); }
+  return r;
+}
+
+/* ---------- util ---------- */
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
+const fmtDate = s => s ? new Date(s).toLocaleString("id-ID", { dateStyle: "medium", timeStyle: "short" }) : "";
+const age = dob => { const b = new Date(dob), n = new Date(); let a = n.getFullYear() - b.getFullYear(); if (n < new Date(n.getFullYear(), b.getMonth(), b.getDate())) a--; return a; };
+const waNum = p => { let d = String(p || "").replace(/\D/g, ""); if (d.startsWith("0")) d = "62" + d.slice(1); return d; };
+function say(el, msg, err) { el.textContent = msg; el.classList.toggle("err", !!err); }
+
+/* ---------- login / logout ---------- */
+$("loginForm").addEventListener("submit", async e => {
+  e.preventDefault(); $("loginBtn").disabled = true; say($("loginStatus"), "Memeriksa…");
+  try {
+    const r = await fetch(`${U}/auth/v1/token?grant_type=password`, { method: "POST", headers: { apikey: K, "Content-Type": "application/json" }, body: JSON.stringify({ email: $("email").value.trim(), password: $("password").value }) });
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok) throw new Error("Email atau password salah.");
+    saveSession(toSession(d));
+    const adm = await (await api("/rest/v1/rpc/is_admin", { method: "POST", headers: { "Content-Type": "application/json" }, body: "{}" })).json();
+    if (adm !== true) { logout("Akun ini bukan admin."); return; }
+    $("password").value = ""; say($("loginStatus"), "");
+    showDashboard();
+  } catch (err) { say($("loginStatus"), err.message, true); }
+  finally { $("loginBtn").disabled = false; }
+});
+function logout(msg) {
+  if (session) fetch(`${U}/auth/v1/logout`, { method: "POST", headers: { apikey: K, Authorization: "Bearer " + session.access_token } }).catch(() => {});
+  saveSession(null); rows = [];
+  $("dashboardPanel").classList.add("hidden"); $("logoutBtn").classList.add("hidden"); $("loginPanel").classList.remove("hidden");
+  if ($("detail").open) $("detail").close();
+  say($("loginStatus"), msg || "", !!msg);
+}
+$("logoutBtn").addEventListener("click", () => logout("Anda telah keluar."));
+function showDashboard() { $("loginPanel").classList.add("hidden"); $("dashboardPanel").classList.remove("hidden"); $("logoutBtn").classList.remove("hidden"); load(); }
+
+/* ---------- data ---------- */
+async function load() {
+  say($("dashStatus"), "Memuat data…");
+  try {
+    const r = await api("/rest/v1/applications?select=*&order=created_at.desc&limit=2000");
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    rows = await r.json(); render();
+    say($("dashStatus"), `${rows.length} pelamar dimuat.`);
+  } catch (err) { say($("dashStatus"), "Tidak dapat memuat data: " + err.message, true); }
+}
+function render() {
+  const q = $("search").value.toLowerCase().trim(), st = $("filterStatus").value;
+  const counts = Object.fromEntries(STATUSES.map(s => [s, 0])); rows.forEach(a => counts[a.status]++);
+  $("stats").innerHTML = `<div class="stat ${!st ? "on" : ""}" data-s=""><b>${rows.length}</b><span>Total</span></div>` +
+    STATUSES.map(s => `<div class="stat ${st === s ? "on" : ""}" data-s="${s}"><b>${counts[s]}</b><span>${s}</span></div>`).join("");
+  document.querySelectorAll(".stat").forEach(el => el.addEventListener("click", () => { $("filterStatus").value = el.dataset.s; render(); }));
+  const list = rows.filter(a => (!st || a.status === st) && `${a.id} ${a.full_name} ${a.position} ${a.preferred_location}`.toLowerCase().includes(q));
+  $("rows").innerHTML = list.map(a => `<tr class="clickable" data-id="${esc(a.id)}"><td>${esc(a.id)}</td><td><strong>${esc(a.full_name)}</strong><br><span class="small muted">${age(a.date_of_birth)} th · ${esc(a.preferred_location)}</span></td><td>${esc(a.position)}</td><td>${esc(a.applicant_whatsapp)}</td><td class="small">${esc(fmtDate(a.created_at))}</td><td><span class="tag ${esc(a.status)}">${esc(a.status)}</span></td></tr>`).join("") || '<tr><td colspan="6">Tidak ada pelamar yang cocok.</td></tr>';
+  document.querySelectorAll("#rows tr.clickable").forEach(tr => tr.addEventListener("click", () => openDetail(tr.dataset.id)));
+}
+$("search").addEventListener("input", render); $("filterStatus").addEventListener("change", render); $("refreshBtn").addEventListener("click", load);
+
+/* ---------- detail ---------- */
+const DOCS = [["ktp_path","KTP"],["photo_path","Foto diri"],["kk_path","Kartu Keluarga"],["alt_path","Dokumen alternatif"]];
+function openDetail(id) {
+  current = rows.find(a => a.id === id); if (!current) return;
+  const a = current;
+  $("dTitle").textContent = a.id; $("dTag").textContent = a.status; $("dTag").className = "tag " + a.status;
+  const f = [["Nama", a.full_name],["Tanggal lahir", `${a.date_of_birth} (${age(a.date_of_birth)} tahun)`],["Jenis kelamin", a.gender || "-"],["WhatsApp", a.applicant_whatsapp],["Alamat", a.address],["Posisi", a.position],["Lokasi", a.preferred_location],["Pendidikan", a.education],["Tinggi / berat", `${a.height_cm} cm / ${a.weight_kg} kg`],["Siap mulai", a.availability || "-"],["Pengalaman", a.experience || "-"],["Keahlian", a.skills || "-"],["Masuk", fmtDate(a.created_at)]];
+  $("dKv").innerHTML = f.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("");
+  $("dDocs").innerHTML = DOCS.filter(([k]) => a[k]).map(([k, l]) => `<button class="secondary" data-path="${esc(a[k])}">${esc(l)}</button>`).join("") || '<span class="muted small">Tidak ada dokumen.</span>';
+  $("dDocs").querySelectorAll("button").forEach(b => b.addEventListener("click", () => openDoc(b.dataset.path)));
+  $("dStatus").value = a.status; $("dNote").value = a.admin_note || ""; say($("dStatusMsg"), "");
+  $("dWa").href = "https://wa.me/" + waNum(a.applicant_whatsapp);
+  $("detail").showModal();
+}
+$("dClose").addEventListener("click", () => $("detail").close());
+async function openDoc(path) {
+  const w = window.open("about:blank", "_blank");   // dibuka dulu agar tidak diblokir popup
+  try {
+    const r = await api(`/storage/v1/object/sign/${BUCKET}/${path}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ expiresIn: 120 }) });
+    const d = await r.json(); if (!r.ok || !d.signedURL) throw new Error("gagal membuat tautan");
+    w.location.href = `${U}/storage/v1${d.signedURL}`;
+  } catch (err) { if (w) w.close(); say($("dStatusMsg"), "Gagal membuka dokumen: " + err.message, true); }
+}
+$("dSave").addEventListener("click", async () => {
+  $("dSave").disabled = true;
+  try {
+    const r = await api(`/rest/v1/applications?id=eq.${encodeURIComponent(current.id)}`, { method: "PATCH", headers: { "Content-Type": "application/json", Prefer: "return=minimal" }, body: JSON.stringify({ status: $("dStatus").value, admin_note: $("dNote").value.trim() || null }) });
+    if (!r.ok) throw new Error("HTTP " + r.status);
+    current.status = $("dStatus").value; current.admin_note = $("dNote").value.trim() || null;
+    $("dTag").textContent = current.status; $("dTag").className = "tag " + current.status;
+    say($("dStatusMsg"), "Tersimpan."); render();
+  } catch (err) { say($("dStatusMsg"), "Gagal menyimpan: " + err.message, true); }
+  finally { $("dSave").disabled = false; }
+});
+$("dDelete").addEventListener("click", async () => {
+  if (!confirm(`Hapus permanen data dan dokumen ${current.id} (${current.full_name})? Tindakan ini tidak dapat dibatalkan.`)) return;
+  try {
+    const paths = DOCS.map(([k]) => current[k]).filter(Boolean);
+    if (paths.length) { const r = await api(`/storage/v1/object/${BUCKET}`, { method: "DELETE", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ prefixes: paths }) }); if (!r.ok) throw new Error("hapus dokumen gagal (" + r.status + ")"); }
+    const r2 = await api(`/rest/v1/applications?id=eq.${encodeURIComponent(current.id)}`, { method: "DELETE", headers: { Prefer: "return=minimal" } });
+    if (!r2.ok) throw new Error("hapus data gagal (" + r2.status + ")");
+    $("detail").close(); await load();
+  } catch (err) { say($("dStatusMsg"), "Gagal menghapus: " + err.message, true); }
+});
+
+/* ---------- CSV ---------- */
+$("csvBtn").addEventListener("click", () => {
+  const cols = ["id","full_name","date_of_birth","gender","applicant_whatsapp","address","position","preferred_location","education","height_cm","weight_kg","availability","status","admin_note","created_at"];
+  const cell = v => { let s = String(v ?? ""); if (/^[=+\-@\t\r]/.test(s)) s = "'" + s; return '"' + s.replace(/"/g, '""') + '"'; };
+  const csv = "﻿" + [cols.join(","), ...rows.map(a => cols.map(c => cell(a[c])).join(","))].join("\r\n");
+  const l = document.createElement("a"); l.href = URL.createObjectURL(new Blob([csv], { type: "text/csv;charset=utf-8" }));
+  l.download = `pelamar-unicorn-${new Date().toISOString().slice(0, 10)}.csv`; l.click(); URL.revokeObjectURL(l.href);
+});
+
+/* ---------- mulai ---------- */
+if (session) { api("/rest/v1/rpc/is_admin", { method: "POST", headers: { "Content-Type": "application/json" }, body: "{}" }).then(r => r.json()).then(ok => ok === true ? showDashboard() : logout("Akun ini bukan admin.")).catch(() => {}); }
+</script>
+</body>
+</html>
