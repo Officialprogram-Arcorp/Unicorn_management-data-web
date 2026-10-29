@@ -170,4 +170,4 @@ create policy applicant_docs_admin_delete on storage.objects for delete to authe
 -- ---------- Admin pertama ----------
 -- Ganti email ini bila perlu. Pengguna Auth dengan email yang sama harus dibuat di
 -- Supabase Dashboard > Authentication > Users > Add user.
-insert into public.admins (email) values ('swasmithamanagement@gmail.com'), ('official.arcorporation@gmail.com') on conflict do nothing;
+insert into public.admins (email) values ('swasmithamanagement@gmail.com'), ('official.arcorporation@gmail.com'), ('emanagement.recruitment@gmail.com') on conflict do nothing;
