@@ -46,7 +46,8 @@ create table if not exists public.applications (
   weight_kg          numeric(5,1) not null check (weight_kg between 10 and 350),
   availability       text check (char_length(availability) <= 60),
   experience         text check (char_length(experience) <= 1000),
-  skills             text check (char_length(skills) <= 800),
+  skills             text check (char_length(skills) <= 800),   -- tidak dipakai lagi oleh formulir (data lama saja)
+  family_permission  boolean not null default false,            -- centang opsional: sudah izin keluarga/orang tua
   ktp_path           text not null,
   kk_path            text,
   alt_path           text,
@@ -91,6 +92,7 @@ declare
   v_kk     text := nullif(payload ->> 'kk_path', '');
   v_alt    text := nullif(payload ->> 'alt_path', '');
   v_photo  text := payload ->> 'photo_path';
+  v_family boolean := coalesce((payload ->> 'family_permission')::boolean, false);
   p        text;
 begin
   v_folder := (payload ->> 'upload_folder')::uuid;
@@ -131,13 +133,13 @@ begin
   insert into public.applications (
     id, upload_folder, full_name, date_of_birth, gender, applicant_whatsapp, address, position,
     preferred_location, education, height_cm, weight_kg, availability, experience, skills,
-    ktp_path, kk_path, alt_path, photo_path
+    ktp_path, kk_path, alt_path, photo_path, family_permission
   ) values (
     v_id, v_folder, btrim(payload ->> 'full_name'), v_dob, nullif(payload ->> 'gender', ''), v_wa,
     btrim(payload ->> 'address'), payload ->> 'position', btrim(payload ->> 'preferred_location'),
     payload ->> 'education', (payload ->> 'height_cm')::numeric, (payload ->> 'weight_kg')::numeric,
     nullif(payload ->> 'availability', ''), nullif(payload ->> 'experience', ''), nullif(payload ->> 'skills', ''),
-    v_ktp, v_kk, v_alt, v_photo
+    v_ktp, v_kk, v_alt, v_photo, v_family
   );
   return v_id;
 end $$;

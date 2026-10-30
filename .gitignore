@@ -16,3 +16,6 @@ Thumbs.db
 Desktop.ini
 .DS_Store
 .claude/settings.local.json
+
+# Katalog font: berisi font berlisensi campur, hanya untuk tinjauan lokal, jangan dideploy
+public/katalog-font/

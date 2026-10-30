@@ -101,7 +101,8 @@
         upload_folder: folder, full_name: val("full_name"), date_of_birth: val("date_of_birth"), gender: val("gender"),
         applicant_whatsapp: val("applicant_whatsapp"), address: val("address"), position: val("position"),
         preferred_location: val("preferred_location"), education: val("education"), height_cm: val("height_cm"),
-        weight_kg: val("weight_kg"), availability: val("availability"), experience: val("experience"), skills: val("skills"),
+        weight_kg: val("weight_kg"), availability: val("availability"), experience: val("experience"),
+        family_permission: form.family_permission.checked,
         ktp_path: paths.ktp, photo_path: paths.foto, kk_path: paths.kk || "", alt_path: paths.alt || ""
       };
       const res = await fetch(`${cfg.SUPABASE_URL}/rest/v1/rpc/submit_application`, {

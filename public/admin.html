@@ -197,7 +197,7 @@ function openDetail(id) {
   current = rows.find(a => a.id === id); if (!current) return;
   const a = current;
   $("dTitle").textContent = a.id; $("dTag").textContent = a.status; $("dTag").className = "tag " + a.status;
-  const f = [["Nama", a.full_name],["Tanggal lahir", `${a.date_of_birth} (${age(a.date_of_birth)} tahun)`],["Jenis kelamin", a.gender || "-"],["WhatsApp", a.applicant_whatsapp],["Alamat", a.address],["Posisi", a.position],["Lokasi", a.preferred_location],["Pendidikan", a.education],["Tinggi / berat", `${a.height_cm} cm / ${a.weight_kg} kg`],["Siap mulai", a.availability || "-"],["Pengalaman", a.experience || "-"],["Keahlian", a.skills || "-"],["Masuk", fmtDate(a.created_at)]];
+  const f = [["Nama", a.full_name],["Tanggal lahir", `${a.date_of_birth} (${age(a.date_of_birth)} tahun)`],["Jenis kelamin", a.gender || "-"],["WhatsApp", a.applicant_whatsapp],["Alamat", a.address],["Posisi", a.position],["Lokasi", a.preferred_location],["Pendidikan", a.education],["Tinggi / berat", `${a.height_cm} cm / ${a.weight_kg} kg`],["Siap mulai", a.availability || "-"],["Pengalaman", a.experience || "-"],["Izin keluarga", a.family_permission ? "Ya, sudah izin" : "Belum dicentang"],["Keahlian (data lama)", a.skills || "-"],["Masuk", fmtDate(a.created_at)]];
   $("dKv").innerHTML = f.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("");
   $("dDocs").innerHTML = DOCS.filter(([k]) => a[k]).map(([k, l]) => `<button class="secondary" data-path="${esc(a[k])}">${esc(l)}</button>`).join("") || '<span class="muted small">Tidak ada dokumen.</span>';
   $("dDocs").querySelectorAll("button").forEach(b => b.addEventListener("click", () => openDoc(b.dataset.path)));

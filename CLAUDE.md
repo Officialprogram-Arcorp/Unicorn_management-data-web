@@ -19,4 +19,6 @@ Baca `README.md` untuk arsitektur, langkah setup, dan batasan paket gratis.
 - [ ] Hapus data uji `UM-2026-0001` lewat dashboard.
 - [ ] Klik email aktivasi FormSubmit setelah pendaftaran pertama.
 - [x] Deploy: Cloudflare Pages dari repo GitHub `Officialprogram-Arcorp/Unicorn_management-data-web` (branch `main`, output directory `public`), alamat https://unicorn-management-data-web.pages.dev — `git push` ke `main` = deploy otomatis.
-- [x] "Jam kerja" dikonfirmasi: mulai pukul 12.00 (sudah dipasang di lowongan).
+- [x] "Jam kerja" kini: sesuai venue penempatan (bukan lagi pukul 12.00). Baris "Pendapatan" (Rp 4 juta) sudah dihapus dari lowongan.
+- [x] Formulir: hanya posisi Guest Relation Ladies (hidden input), kesiapan 3 pilihan (Segera / Dalam 3 hari / Diskusi lebih lanjut), kolom keahlian dihapus, centang opsional izin keluarga (kolom `family_permission`).
+- [x] Font web: Oswald (judul) + Muli (isi) di `public/fonts/`; kontak memakai Courier New tebal. Katalog font lokal: `public/katalog-font/` (git-ignored, jangan dideploy).
