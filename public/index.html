@@ -23,21 +23,20 @@ section[id]{scroll-margin-top:72px}
 .eyebrow{font-family:var(--fh);font-size:.82rem;letter-spacing:.26em;font-weight:700;color:var(--gold);text-transform:uppercase}
 
 /* NAV */
-@font-face{font-family:"Banana Chips";src:url("fonts/bananachips-400.otf") format("opentype");font-weight:400;font-style:normal;font-display:swap}
 .nav{position:sticky;top:0;z-index:30;background:linear-gradient(180deg,#2b0f12f2,#3a1519ee);backdrop-filter:blur(10px);border-bottom:1px solid #f0c98744;box-shadow:0 10px 30px #00000040}
 .nav::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:linear-gradient(90deg,transparent,var(--gold) 20%,var(--gold2) 50%,var(--gold) 80%,transparent);opacity:.85}
 .nav .container{display:flex;align-items:center;gap:22px;height:76px}
-.brand{display:flex;align-items:center;gap:12px;text-decoration:none;font:400 1.5rem/1 "Banana Chips",var(--fh);letter-spacing:.1em}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;font:400 1.25rem/1 "Unique",var(--fh);letter-spacing:.06em;white-space:nowrap}
 .brand img{width:50px;height:50px;object-fit:contain;padding:3px;border-radius:50%;border:1px solid #f0c98799;background:radial-gradient(circle,#6a2a2c,#2b0f12);box-shadow:0 0 0 3px #d99a4222,0 6px 16px #d9a04255}
 .brand .bt{background:linear-gradient(100deg,#f0c987 0%,#fff3d6 40%,#d99a42 70%,#f0c987 100%);background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 6s linear infinite}
 .brand .bt::before,.brand .bt::after{content:"✦";font-size:.55em;margin:0 .45em;-webkit-text-fill-color:var(--gold2);vertical-align:.3em}
 .brand .bt::before{margin-left:0}
 @keyframes shine{to{background-position:200% center}}
-.nav ul{display:flex;gap:26px;list-style:none;margin:0 0 0 auto;padding:0}
-.nav ul a{position:relative;text-decoration:none;color:#fbe9dd;font:400 1.2rem "Banana Chips",var(--fh);letter-spacing:.08em;padding:6px 0}
+.nav ul{display:flex;gap:20px;list-style:none;margin:0 0 0 auto;padding:0}
+.nav ul a{position:relative;text-decoration:none;color:#fbe9dd;font:400 .95rem var(--fh);letter-spacing:.08em;text-transform:uppercase;padding:6px 0}
 .nav ul a::after{content:"";position:absolute;left:0;right:100%;bottom:0;height:2px;background:linear-gradient(90deg,var(--gold),var(--gold2));transition:right .3s}
 .nav ul a:hover{color:var(--gold2)}.nav ul a:hover::after{right:0}
-.nav .btn{font:400 1.2rem "Banana Chips",var(--fh);letter-spacing:.08em}
+.nav .btn{font:700 1.05rem var(--fh);letter-spacing:.1em}
 .btn{display:inline-block;border-radius:12px;padding:12px 22px;font:700 .95rem var(--fh);letter-spacing:.07em;text-decoration:none;background:linear-gradient(135deg,var(--gold2),var(--gold));color:var(--wine);box-shadow:0 10px 26px #d99a4240;border:0;cursor:pointer}
 .btn:hover{filter:brightness(1.06)}
 .btn.ghost{background:transparent;color:var(--gold2);border:1px solid #d99a4299;box-shadow:none}
@@ -190,7 +189,8 @@ button{border:0;border-radius:12px;padding:13px 17px;font:700 1rem var(--fh);let
 .card.t3d .ic{transform:translateZ(34px)}
 .card.t3d h3,.step.t3d b,.val.t3d b{transform:translateZ(20px)}
 @media(prefers-reduced-motion:reduce){.hero .logo img,.hero .logo::before,.hero .logo::after,.brand .bt{animation:none}}
-@media(max-width:620px){.brand{font-size:clamp(1.15rem,5.2vw,1.6rem);letter-spacing:.04em;gap:8px}.brand img{width:44px;height:44px}.brand .bt::before,.brand .bt::after{display:none}.nav .btn{font-size:1.15rem;padding:9px 14px}}
+@media(max-width:1000px){.nav ul{display:none}.nav .btn{margin-left:auto}}
+@media(max-width:620px){.brand{font-size:clamp(1.15rem,5.2vw,1.6rem);letter-spacing:.04em;gap:8px;white-space:normal}.brand img{width:44px;height:44px}.brand .bt::before,.brand .bt::after{display:none}.nav .btn{font-size:1.15rem;padding:9px 14px}}
 
 /* REVEAL */
 .rv{opacity:0;transform:translateY(18px);transition:opacity .7s,transform .7s}
