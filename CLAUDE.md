@@ -13,6 +13,7 @@ Baca `README.md` untuk arsitektur, langkah setup, dan batasan paket gratis.
 - Menambah posisi lowongan = ubah 3 tempat: opsi `<select id="posisi">` di `index.html`, CHECK constraint `applications_position_check` di database (migrasi), dan `supabase/schema.sql`.
 - Berkas di Supabase Storage tidak bisa dihapus lewat SQL; hapus lewat dashboard admin (tombol "Hapus data") atau Storage API.
 - `public/starter-lama.html` (diabaikan Git) dan `api-contract.json` adalah sisa starter lama, tidak dipakai.
+- Header keamanan (CSP, X-Frame-Options, dll.) ada di `public/_headers`. CSP hanya mengizinkan sumber sendiri + Supabase + FormSubmit. Bila menambah sumber eksternal (CDN, font, API, peta tertanam), WAJIB perbarui CSP di berkas itu, kalau tidak sumber tersebut akan diblokir browser.
 
 ## Status / sisa pekerjaan
 - [ ] Buat akun admin di Supabase Auth (email `swasmithamanagement@gmail.com` dan/atau `official.arcorporation@gmail.com`, keduanya sudah ada di tabel `admins`; wajib *Auto Confirm User*), lalu login ke `admin.html`.
